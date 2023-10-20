@@ -34,14 +34,14 @@ class KwCalc extends GetView<DivisionCalculationController> {
                     name: 'Division Width (in m2)',
                     decoration: const InputDecoration(
                         labelText: 'Division Width (in m2)'),
-                    initialValue: '10',
+                    initialValue: '5',
                   ),
                   const SizedBox(height: 10),
                   FormBuilderTextField(
                     name: 'Division Height (in m2)',
                     decoration: const InputDecoration(
                         labelText: 'Division Height (in m2)'),
-                    initialValue: '6',
+                    initialValue: '3',
                   ),
                   const SizedBox(height: 10),
                   MaterialButton(

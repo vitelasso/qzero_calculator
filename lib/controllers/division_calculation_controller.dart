@@ -3,17 +3,17 @@ import 'package:image/image.dart' as img;
 import 'dart:ui' as ui;
 
 class DivisionCalculationController extends GetxController {
-  final divisionLength = 10.0.obs;
+  final divisionLength = 5.0.obs;
 
-  final divisionLengthToUse = 10.0.obs;
+  final divisionLengthToUse = 5.0.obs;
 
   final drawDivisionAreas = true.obs;
 
   final totalAmountOfFilms = 0.0.obs;
 
-  final divisionWidth = 5.0.obs;
+  final divisionWidth = 3.0.obs;
 
-  final divisionWidthToUse = 5.0.obs;
+  final divisionWidthToUse = 3.0.obs;
 
   final totalArea = 0.0.obs;
 
