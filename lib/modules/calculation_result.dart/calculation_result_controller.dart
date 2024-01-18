@@ -8,6 +8,13 @@ class CalculationResultController extends GetxController {
 
   final totalArea = 0.0.obs;
 
+  @override
+  void onReady() {
+    super.onReady();
+    print(Get.arguments['width']);
+    print(Get.arguments['height']);
+  }
+
   void updateResultImage(ui.Image? name) {
     resultImage(name);
   }
@@ -18,5 +25,6 @@ class CalculationResultController extends GetxController {
 
   void updateTotalArea(double name) {
     totalArea(name);
+    update();
   }
 }
