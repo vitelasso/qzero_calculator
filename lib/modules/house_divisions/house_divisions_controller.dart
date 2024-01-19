@@ -77,4 +77,10 @@ class HouseDivisionsController extends GetxController {
     fetchHouseDivisions();
     update();
   }
+
+  void removeDivision(HouseDivision division) {
+    selectedHouse.value!.divisions.removeWhere((element) => element.name == division.name);
+    fetchHouseDivisions();
+    update();
+  }
 }

@@ -129,6 +129,39 @@ class HouseDivisionsView extends GetView<HouseDivisionsController> {
             ));
   }
 
+   _removeHouseDivision(BuildContext context, HouseDivision division) {
+      // set up the buttons
+      Widget cancelButton = TextButton(
+        child: Text("Cancel"),
+        onPressed: () => Get.back(),
+      );
+      Widget continueButton = TextButton(
+        child: Text("Continue"),
+        onPressed: () {
+          controller.removeDivision(division);
+          Get.back();
+        },
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("Delete House Division"),
+        content: Text("Are you sure you want to delete division ${division.name}?"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -148,13 +181,26 @@ class HouseDivisionsView extends GetView<HouseDivisionsController> {
                   },
                   child: Card(
                       child: GridTile(
-                    header: Text('Name: ${controller.houseDivisionsList[index].name}'),
-                    footer: Text(
-                        'Measures: ${controller.houseDivisionsList[index].width.toString()} m x ${controller.houseDivisionsList[index].height.toString()} m'),
+                    header: Column(
+                      children: [
+                        Text('Name: ${controller.houseDivisionsList[index].name}'),
+                        Text(
+                        'Measures: ${controller.houseDivisionsList[index].width.toString()} m x ${controller.houseDivisionsList[index].height.toString()} m')
+                      ],
+                    ),
+                    footer: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () => _removeHouseDivision(context, controller.houseDivisionsList[index]),
+                          icon: const Icon(Icons.delete),
+                        ),
+                      ],
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Kw Amount: ${controller.houseDivisionsList[index].kwAmount.toString()}'),
+                        Text('Kw Amount: ${controller.houseDivisionsList[index].kwAmount.toString()} w'),
                         Text('Films Amount: ${controller.houseDivisionsList[index].filmsAmount.toString()}'),
                       ],
                     ),
