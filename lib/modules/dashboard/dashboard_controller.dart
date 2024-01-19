@@ -12,6 +12,7 @@ class DashboardController extends GetxController {
     housesList.clear();
     housesList.addAll((box.values as Iterable<House>).toList());
   }
+
   @override
   void onReady() async {
     super.onReady();
@@ -21,16 +22,16 @@ class DashboardController extends GetxController {
 
   String calculateFilmsAmount(House house) {
     int filmsAmount = 0;
-      for (var division in house.divisions) {
-        filmsAmount += division.filmsAmount.toInt();
-      }
+    for (var division in house.divisions) {
+      filmsAmount += division.filmsAmount.toInt();
+    }
     return filmsAmount.toString();
   }
 
   String calculateKwAmount(House house) {
     double kwAmount = 0;
     for (var division in house.divisions) {
-        kwAmount += division.kwAmount;
+      kwAmount += division.kwAmount;
     }
     return kwAmount.toString();
   }
@@ -47,6 +48,21 @@ class DashboardController extends GetxController {
     }
 
     box.add(dataModel);
+    fetchHouses();
+    update();
+  }
+
+  void editHouse(House house, String name, String address, int squareMeters) {
+    house.name = name;
+    house.address = address;
+    house.squareMeters = squareMeters;
+    house.save();
+    fetchHouses();
+    update();
+  }
+
+  void removeHouse(House house) {
+    house.delete();
     fetchHouses();
     update();
   }

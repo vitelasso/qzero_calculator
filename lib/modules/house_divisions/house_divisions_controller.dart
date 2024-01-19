@@ -17,14 +17,19 @@ class HouseDivisionsController extends GetxController {
     houseDivisionsList.clear();
     houseDivisionsList.addAll(selectedHouse.value!.divisions.toList());
   }
+
   @override
   void onReady() async {
     super.onReady();
     box = Hive.box<House>("hive_box");
-    if(Get.arguments['house'] != null) {
-    selectedHouse(Get.arguments['house']);
-    fetchHouseDivisions();
+    if (Get.arguments['house'] != null) {
+      selectedHouse(Get.arguments['house']);
+      fetchHouseDivisions();
     }
+  }
+
+  bool nameAlreadyExist(String name) {
+    return selectedHouse.value!.divisions.any((element) => element.name == name);
   }
 
   void editHouseDivision(HouseDivision division, String name, double width, double height) {

@@ -32,11 +32,10 @@ class HouseDivisionsView extends GetView<HouseDivisionsController> {
                               initialValue: 'Bedroom',
                             ),
                             FormBuilderTextField(
-                              name: 'width',
-                              decoration: const InputDecoration(labelText: 'Width (in m)'),
-                              initialValue: '4',
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true)
-                            ),
+                                name: 'width',
+                                decoration: const InputDecoration(labelText: 'Width (in m)'),
+                                initialValue: '4',
+                                keyboardType: const TextInputType.numberWithOptions(decimal: true)),
                             const SizedBox(height: 10),
                             FormBuilderTextField(
                               name: 'height',
@@ -48,6 +47,16 @@ class HouseDivisionsView extends GetView<HouseDivisionsController> {
                             MaterialButton(
                               color: Theme.of(context).colorScheme.secondary,
                               onPressed: () async {
+                                String? houseDivisionName = _formKey.currentState?.instantValue["name"].toString();
+                                if (houseDivisionName == null || houseDivisionName.isEmpty) {
+                                  _formKey.currentState?.fields['name']?.invalidate('Name is required');
+                                  return;
+                                }
+                                if (controller.nameAlreadyExist(houseDivisionName)) {
+                                  _formKey.currentState?.fields['name']?.invalidate('Name already taken');
+                                  return;
+                                }
+
                                 controller.addHouseDivision(
                                     _formKey.currentState?.instantValue["name"].toString() ?? '',
                                     double.parse(_formKey.currentState?.instantValue["width"]),
@@ -86,11 +95,10 @@ class HouseDivisionsView extends GetView<HouseDivisionsController> {
                           children: [
                             Text('Edit ${houseDivision.name} Division'),
                             FormBuilderTextField(
-                              name: 'width',
-                              decoration: const InputDecoration(labelText: 'Width (in m)'),
-                              initialValue: houseDivision.width.toString(),
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true)
-                            ),
+                                name: 'width',
+                                decoration: const InputDecoration(labelText: 'Width (in m)'),
+                                initialValue: houseDivision.width.toString(),
+                                keyboardType: const TextInputType.numberWithOptions(decimal: true)),
                             const SizedBox(height: 10),
                             FormBuilderTextField(
                               name: 'height',
@@ -138,17 +146,20 @@ class HouseDivisionsView extends GetView<HouseDivisionsController> {
                   onTap: () {
                     _editHouseDivision(context, controller.houseDivisionsList[index]);
                   },
-                  child: Card(child: GridTile(header: Text('Name: ${controller.houseDivisionsList[index].name}'), footer: Text('Measures: ${controller.houseDivisionsList[index].width.toString()} m x ${controller.houseDivisionsList[index].height.toString()} m'),
-                       child:  Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                                             children: [
-                                               Text('Kw Amount: ${controller.houseDivisionsList[index].kwAmount.toString()}'),
-                                               Text('Films Amount: ${controller.houseDivisionsList[index].filmsAmount.toString()}'),
-                                             ],
-                                           ),
-                       )));
+                  child: Card(
+                      child: GridTile(
+                    header: Text('Name: ${controller.houseDivisionsList[index].name}'),
+                    footer: Text(
+                        'Measures: ${controller.houseDivisionsList[index].width.toString()} m x ${controller.houseDivisionsList[index].height.toString()} m'),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Kw Amount: ${controller.houseDivisionsList[index].kwAmount.toString()}'),
+                        Text('Films Amount: ${controller.houseDivisionsList[index].filmsAmount.toString()}'),
+                      ],
+                    ),
+                  )));
             }),
-
         floatingActionButton: FloatingActionButton(
           onPressed: () => _newHouseDivision(context),
           tooltip: 'New House Division',

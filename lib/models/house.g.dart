@@ -43,8 +43,5 @@ class HouseAdapter extends TypeAdapter<House> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is HouseAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is HouseAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
